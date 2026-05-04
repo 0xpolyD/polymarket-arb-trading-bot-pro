@@ -14,14 +14,6 @@ export async function retryWithInstantRetry<T>(
             return result;
         } catch (error: any) {
             lastError = error;
-
-            if (error?.status === 401 || error?.data?.error?.includes("Unauthorized")) {
-                throw error;
-            }
-
-            if (error?.message?.includes("Cannot") || error?.message?.includes("invalid") || error?.message?.includes("missing")) {
-                throw error;
-            }
             
             if (attempt < maxRetries) {
                 console.log(`🔄 ${operationName} failed (attempt ${attempt + 1}/${maxRetries + 1}), retrying instantly...`);
